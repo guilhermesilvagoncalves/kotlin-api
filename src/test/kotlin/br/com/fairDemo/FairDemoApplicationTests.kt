@@ -1,6 +1,6 @@
 package br.com.fairDemo
 
-import br.com.fairDemo.controller.FairController
+import br.com.fairDemo.infrastructure.http.controller.FairController
 import br.com.fairDemo.useCases.ImportFileFromURLImpl
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

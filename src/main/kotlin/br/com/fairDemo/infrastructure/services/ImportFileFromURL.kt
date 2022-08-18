@@ -1,4 +1,4 @@
-package br.com.fairDemo.controller
+package br.com.fairDemo.infrastructure.services
 
 interface ImportFileFromURL {
 
