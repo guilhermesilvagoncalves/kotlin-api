@@ -2,5 +2,5 @@
 
 ## How to run application
 
-mvn clean install
-mvn spring-boot:run
+./mvnw clean install
+./mvnw spring-boot:run
