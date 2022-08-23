@@ -1,6 +1,5 @@
-package br.com.fairDemo.infrastructure.services
+package br.com.fairDemo.useCases
 
 interface ImportFileFromURL {
-
     fun execute(url: String)
 }
