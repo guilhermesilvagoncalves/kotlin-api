@@ -5,4 +5,5 @@ import br.com.fairDemo.entities.Fair
 interface FairCRUDService {
 
     fun create(newFair: Fair): Fair
+    fun delete(fairId: Long): Boolean
 }

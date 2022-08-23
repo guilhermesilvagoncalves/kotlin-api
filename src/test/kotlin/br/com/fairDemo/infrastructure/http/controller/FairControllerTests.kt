@@ -1,6 +1,6 @@
 package br.com.fairDemo.infrastructure.http.controller
 
-import br.com.fairDemo.entities.Fair
+import br.com.fairDemo.fixtures.FairFixture
 import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairRequest
 import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairResponse
 import br.com.fairDemo.useCases.FairCRUDService
@@ -30,42 +30,37 @@ class FairControllerTests {
 	@Test
 	fun shouldCallFairServiceOnFairCreation(){
 		val createFairRequest: CreateFairRequest = mockk()
-		every { createFairRequest.toFairDomain() } returns getFairDomainForTests()
-		every { fairService.create(getFairDomainForTests()) } returns getFairDomainForTests()
+		every { createFairRequest.toFairDomain() } returns FairFixture.getFairDomainForTests()
+		every { fairService.create(FairFixture.getFairDomainForTests()) } returns FairFixture.getFairDomainForTests()
 		controller.createFair(createFairRequest)
-		verify(exactly = 1) { fairService.create(getFairDomainForTests()) }
+		verify(exactly = 1) { fairService.create(FairFixture.getFairDomainForTests()) }
 	}
 
 	@Test
 	fun shouldReturnFairObjectOnResponseOfFairCreation(){
 		val createFairRequest: CreateFairRequest = mockk()
-		every { createFairRequest.toFairDomain() } returns getFairDomainForTests()
-		every { fairService.create(getFairDomainForTests()) } returns getFairDomainForTests()
+		every { createFairRequest.toFairDomain() } returns FairFixture.getFairDomainForTests()
+		every { fairService.create(FairFixture.getFairDomainForTests()) } returns FairFixture.getFairDomainForTests()
 		assertThat(
 			controller.createFair(createFairRequest))
 			.isInstanceOf(CreateFairResponse::class.java)
 	}
 
-	private fun getFairDomainForTests(): Fair {
-		return Fair(
-			id = 1,
-			longitude = -46548146,
-			lagitude = -23568390,
-			setcens = 355030885000019,
-			areap = 3550308005040,
-			coddist = 87,
-			distrito = "VILA FORMOSA",
-			codsubpref = 26,
-			subpref = "ARICANDUVA",
-			regiao5 = "Leste",
-			regiao8 = "Leste 1",
-			nomeFeira = "PRAÃA LE+O X",
-			registro = "7216-8",
-			logradouro = "RUA CODAJ-S",
-			numero = 45,
-			bairro = "VILA FORMOSA",
-			referencia = "PRAÃA  MARECHAL LEIT+O BANDEIRA"
-		)
+	@Test
+	fun shouldCallFairServiceOnFairDeletion(){
+		val fairId = FairFixture.getFairDomainForTests().id
+		every { fairService.delete(fairId) } returns true
+		controller.deleteFair(fairId)
+		verify(exactly = 1) { fairService.delete(fairId) }
+	}
+
+	@Test
+	fun shouldReturnNoContentOnResponseOfFairDeletionCreation(){
+		val fairId = FairFixture.getFairDomainForTests().id
+		every { fairService.delete(fairId) } returns true
+		assertThat(
+			controller.deleteFair(fairId))
+			.isInstanceOf(Unit::class.java)
 	}
 
 }
