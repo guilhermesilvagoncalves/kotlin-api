@@ -1,8 +1,8 @@
-package br.com.fairDemo.infrastructure.http.controller.createFair
+package br.com.fairDemo.infrastructure.http.controller.updateFair
 
 import br.com.fairDemo.entities.Fair
 
-data class CreateFairResponse (
+data class UpdateFairResponse (
     val id: Long?,
     val longitude: Long,
     val lagitude: Long,
@@ -22,8 +22,8 @@ data class CreateFairResponse (
     val referencia: String
 ) {
     companion object{
-        fun fromFairDomain(fair: Fair): CreateFairResponse {
-            return CreateFairResponse(
+        fun fromFairDomain(fair: Fair): UpdateFairResponse {
+            return UpdateFairResponse(
                 id = fair.id,
                 longitude = fair.longitude,
                 lagitude = fair.lagitude,

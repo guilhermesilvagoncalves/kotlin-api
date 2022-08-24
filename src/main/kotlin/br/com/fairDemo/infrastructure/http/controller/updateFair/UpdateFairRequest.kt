@@ -1,9 +1,8 @@
-package br.com.fairDemo.infrastructure.http.controller.createFair
+package br.com.fairDemo.infrastructure.http.controller.updateFair
 
 import br.com.fairDemo.entities.Fair
 
-data class CreateFairRequest (
-    val id: Long,
+data class UpdateFairRequest (
     val longitude: Long,
     val lagitude: Long,
     val setcens: Long,

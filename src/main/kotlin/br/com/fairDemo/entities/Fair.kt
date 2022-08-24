@@ -1,7 +1,7 @@
 package br.com.fairDemo.entities
 
 data class Fair (
-    val id: Long,
+    val id: Long? = null,
     val longitude: Long,
     val lagitude: Long,
     val setcens: Long,
@@ -13,7 +13,7 @@ data class Fair (
     val regiao5: String,
     val regiao8: String,
     val nomeFeira: String,
-    val registro: String,
+    var registro: String,
     val logradouro: String,
     val numero: Long,
     val bairro: String,
