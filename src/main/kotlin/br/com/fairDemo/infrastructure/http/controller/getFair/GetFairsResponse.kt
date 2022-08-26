@@ -1,9 +1,8 @@
 package br.com.fairDemo.infrastructure.http.controller.getFair
 
 import br.com.fairDemo.entities.Fair
-import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairResponse
 
-class GetFairResponse (
+class GetFairsResponse (
     val id: Long?,
     val longitude: Long,
     val lagitude: Long,
@@ -23,8 +22,8 @@ class GetFairResponse (
     val referencia: String
     ) {
         companion object{
-            fun fromFairDomain(fair: Fair): GetFairResponse {
-                return GetFairResponse(
+            fun fromFairDomain(fair: Fair): GetFairsResponse {
+                return GetFairsResponse(
                     id = fair.id,
                     longitude = fair.longitude,
                     lagitude = fair.lagitude,

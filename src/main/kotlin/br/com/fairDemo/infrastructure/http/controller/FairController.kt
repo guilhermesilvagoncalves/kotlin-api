@@ -4,7 +4,7 @@ import br.com.fairDemo.entities.Fair
 import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairRequest
 import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairResponse
 import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairFilter
-import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairResponse
+import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairsResponse
 import br.com.fairDemo.infrastructure.http.controller.updateFair.UpdateFairRequest
 import br.com.fairDemo.infrastructure.http.controller.updateFair.UpdateFairResponse
 import br.com.fairDemo.useCases.FairCRUDService
@@ -60,16 +60,16 @@ class FairController (
     }
 
     @GetMapping("/", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getFair(@RequestParam filter: GetFairFilter): List<GetFairResponse>{
+    fun getFairsByCriteria(@RequestParam filter: GetFairFilter): List<GetFairsResponse>{
         val criteria: GetFairCriteria = filter.toFairCriteria()
         val fairList = fairCRUDServices.getFairByCriteria(criteria)
-        return buildResponseList(fairList)
+        return buildGetFairsByCriteriaResponseList(fairList)
     }
 
-    private fun buildResponseList(fairList: List<Fair>): List<GetFairResponse> {
-        val getFairResponseList = ArrayList<GetFairResponse>()
+    private fun buildGetFairsByCriteriaResponseList(fairList: List<Fair>): List<GetFairsResponse> {
+        val getFairResponseList = ArrayList<GetFairsResponse>()
         fairList.forEach{
-            getFairResponseList.add(GetFairResponse.fromFairDomain(it))
+            getFairResponseList.add(GetFairsResponse.fromFairDomain(it))
         }
         return getFairResponseList
     }

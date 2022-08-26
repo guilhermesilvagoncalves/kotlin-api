@@ -2,8 +2,8 @@ package br.com.fairDemo.usecase
 
 import br.com.fairDemo.entities.Fair
 import br.com.fairDemo.fixtures.FairFixture
+import br.com.fairDemo.fixtures.GetFairFilterFixture
 import br.com.fairDemo.infrastructure.database.FairRepository
-import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairFilter
 import br.com.fairDemo.useCases.FairCRUDServiceImpl
 import br.com.fairDemo.useCases.utils.FairValidation
 import br.com.fairDemo.useCases.utils.GetFairCriteria
@@ -11,14 +11,11 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import org.springframework.boot.context.properties.bind.Bindable.listOf
 import org.springframework.boot.test.context.SpringBootTest
 import java.util.*
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -27,19 +24,16 @@ class FairCRUDServiceTests {
     private val fairValidationMock : FairValidation = mockk()
     val service = FairCRUDServiceImpl(fairRepositoryMock, fairValidationMock)
 
-    private val fairMock: Fair = mockk()
-    private val getFairCriteriaMock: GetFairCriteria = mockk()
+    private val fair: Fair = FairFixture.getFairDomainForTests()
+    private val getFairCriteriaMock: GetFairCriteria = GetFairFilterFixture.getGetFairFilterForTest().toFairCriteria()
     private val listOfFairs: List<Fair> = mockk()
 
     @BeforeEach
     fun setup(){
-        every { fairMock.id } returns FairFixture.getFairDomainForTests().id
-        every { fairRepositoryMock.save(fairMock) } returns fairMock
+        every { fairRepositoryMock.save(fair) } returns fair
         every { fairRepositoryMock.findBy(getFairCriteriaMock) } returns listOfFairs
 
         /*
-        every { fairValidationMock.isValid(fairMock.id) } returns true
-        every { fairRepositoryMock.delete(fairMock.id) } returns Unit
         every { fairRepositoryMock.findBy(fairMock.id) } returns fairMock
 
          */
@@ -47,45 +41,50 @@ class FairCRUDServiceTests {
 
     @Test
     fun shouldCallFairRepositoryOnFairCreation(){
-        service.create(fairMock)
-        verify(exactly = 1) { fairRepositoryMock.save(fairMock) }
+        service.create(fair)
+        verify(exactly = 1) { fairRepositoryMock.save(fair) }
     }
 
     @Test
     fun shouldReturnFairObjectOnResponseOfFairCreation(){
         assertThat(
-            service.create(fairMock))
+            service.create(fair))
             .isInstanceOf(Fair::class.java)
     }
 
-    //TODO: Fix those tests
-/*
     @Test
     fun shouldCallFairRepositoryOnFairDeletion(){
-        service.delete(fairMock.id)
-        verify(exactly = 1) { fairRepositoryMock.delete(fairMock.id) }
+        every { fairValidationMock.isValid(fair.id!!) } returns true
+        every { fairRepositoryMock.delete(fair.id!!) } returns Unit
+        service.delete(fair.id!!)
+        verify(exactly = 1) { fairRepositoryMock.delete(fair.id!!) }
     }
 
     @Test
     fun shouldReturnTrueOnResponseOfFairDeletion(){
+        every { fairValidationMock.isValid(fair.id!!) } returns true
+        every { fairRepositoryMock.delete(fair.id!!) } returns Unit
         assertThat(
-            service.delete(fairMock.id))
+            service.delete(fair.id!!))
             .isTrue
     }
 
     @Test
     fun shouldCallFairRepositoryOnFairUpdate(){
-        service.update(FairFixture.getFairDomainForTests())
-        verify(exactly = 1) { fairRepositoryMock.save(any()) }
+        val fair = FairFixture.getFairDomainForTests()
+        every { fairRepositoryMock.findBy(fair.id!!) } returns fair
+        service.update(fair.id!!, fair)
+        verify(atLeast = 1) { fairRepositoryMock.save(any()) }
     }
 
     @Test
     fun shouldReturnFairObjectOnResponseOfFairUpdate(){
+        val fair = FairFixture.getFairDomainForTests()
+        every { fairRepositoryMock.findBy(fair.id!!) } returns fair
         assertThat(
-            service.update(FairFixture.getFairDomainForTests()))
+            service.update(fair.id!!, fair))
             .isInstanceOf(Fair::class.java)
     }
- */
 
     @Test
     fun shouldCallFairRepositoryOnFairGetByCriteria(){

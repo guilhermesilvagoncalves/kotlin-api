@@ -17,7 +17,7 @@ class FairCRUDServiceImpl(
     }
 
     override fun delete(fairId: Long): Boolean {
-        if (fairValidation.isValid(fairId)) return false
+        if (!fairValidation.isValid(fairId)) return false
         fairRepository.delete(fairId)
         return true
     }
@@ -29,7 +29,7 @@ class FairCRUDServiceImpl(
         }
         val fairToUpdate = keepProtectedDataOnObject(fair, fairFromDatabase!!)
         fairRepository.save(fairToUpdate)
-        return fair
+        return fairToUpdate
     }
 
     override fun getFairByCriteria(criteria: GetFairCriteria): List<Fair> {

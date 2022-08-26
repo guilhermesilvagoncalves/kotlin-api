@@ -2,9 +2,11 @@ package br.com.fairDemo.infrastructure.http.controller
 
 import br.com.fairDemo.entities.Fair
 import br.com.fairDemo.fixtures.FairFixture
+import br.com.fairDemo.fixtures.GetFairFilterFixture
 import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairRequest
 import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairResponse
 import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairFilter
+import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairsResponse
 import br.com.fairDemo.infrastructure.http.controller.updateFair.UpdateFairRequest
 import br.com.fairDemo.infrastructure.http.controller.updateFair.UpdateFairResponse
 import br.com.fairDemo.useCases.FairCRUDService
@@ -14,7 +16,10 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.springframework.boot.test.context.SpringBootTest
 import java.util.*
 
@@ -25,11 +30,9 @@ class FairControllerTests {
 	private val fairService: FairCRUDService = mockk()
 	val controller = FairController(importFileFromURL, fairService)
 
-	private val getFairFilter: GetFairFilter = mockk()
-	private val getFairCriteria: GetFairCriteria = mockk()
-	private val fair: Fair = mockk()
-	private val listOfFairs: List<Fair> = mockk()
-
+	private val getFairFilter: GetFairFilter = GetFairFilterFixture.getGetFairFilterForTest()
+	private val getFairCriteria: GetFairCriteria = getFairFilter.toFairCriteria()
+	private val fair: Fair = FairFixture.getFairDomainForTests()
 
 	@Test
 	fun shouldCallImportFileFromURLService(){
@@ -98,24 +101,28 @@ class FairControllerTests {
 		verify(exactly = 1) { fairService.update(fairId, updateFairRequest.toFairDomain()) }
 	}
 
-	/* TODO: fix it
-
 	@Test
 	fun shouldCallFairServiceOnFairGetByCriteria(){
-		every { getFairFilter.toFairCriteria() } returns getFairCriteria
+		val listOfFairs = getListOfFairs(fair)
 		every { fairService.getFairByCriteria(getFairCriteria) } returns listOfFairs
-		controller.getFair(getFairFilter)
+		controller.getFairsByCriteria(getFairFilter)
 		verify(exactly = 1) { fairService.getFairByCriteria(getFairCriteria) }
 	}
 
 	@Test
 	fun shouldReturnListOfFairsOnResponseOfFairGetByCriteria(){
-		every { getFairFilter.toFairCriteria() } returns getFairCriteria
-		every { listOfFairs.iterator() } returns fair
+		val listOfFairs = getListOfFairs(fair)
 		every { fairService.getFairByCriteria(getFairCriteria) } returns listOfFairs
 		assertThat(
-			controller.getFair(getFairFilter))
-			.isInstanceOf(Unit::class.java)
+			controller.getFairsByCriteria(getFairFilter))
+			.isInstanceOf(List::class.java)
+			.first()
+			.isInstanceOf(GetFairsResponse::class.java)
 	}
- */
+
+	private fun getListOfFairs(fair: Fair): List<Fair> {
+		val listOfFairs = ArrayList<Fair>()
+		listOfFairs.add(fair)
+		return listOfFairs
+	}
 }
