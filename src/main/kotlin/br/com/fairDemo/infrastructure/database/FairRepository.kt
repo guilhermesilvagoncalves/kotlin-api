@@ -1,11 +1,9 @@
 package br.com.fairDemo.infrastructure.database
 
 import br.com.fairDemo.entities.Fair
-import br.com.fairDemo.useCases.utils.GetFairCriteria
+import org.springframework.data.repository.CrudRepository
+import org.springframework.stereotype.Repository
 
-interface FairRepository {
-    fun save(fair: Fair): Fair
-    fun delete(fairId: Long)
-    fun findBy(fairId: Long): Fair?
-    fun findBy(criteria: GetFairCriteria): List<Fair>
+@Repository
+interface FairRepository: CrudRepository<Fair, Long> {
 }

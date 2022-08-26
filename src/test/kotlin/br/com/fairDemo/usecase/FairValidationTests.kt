@@ -9,6 +9,7 @@ import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
+import java.util.*
 
 @SpringBootTest
 class FairValidationTests {
@@ -20,7 +21,7 @@ class FairValidationTests {
 
     @Test
     fun shouldReturnTrueWhenIdExistsOnDatabase(){
-        every { fairRepository.findBy(id) } returns FairFixture.getFairDomainForTests()
+        every { fairRepository.findById(id) } returns Optional.of(FairFixture.getFairDomainForTests())
         assertThat(
             validation.isValid(id))
             .isEqualTo(true)
@@ -28,7 +29,7 @@ class FairValidationTests {
 
     @Test
     fun shouldReturnFalseWhenIdExistsOnDatabase(){
-        every { fairRepository.findBy(id) } returns null
+        every { fairRepository.findById(id) } returns Optional.empty()
         assertThat(
             validation.isValid(id))
             .isEqualTo(false)

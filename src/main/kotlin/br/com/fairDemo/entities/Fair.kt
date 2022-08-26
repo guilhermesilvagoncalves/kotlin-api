@@ -1,23 +1,30 @@
 package br.com.fairDemo.entities
 
-data class Fair (
-    val id: Long? = null,
-    val longitude: Long,
-    val lagitude: Long,
-    val setcens: Long,
-    val areap: Long,
-    val coddist: Long,
-    val distrito: String,
-    val codsubpref: Long,
-    val subpref: String,
-    val regiao5: String,
-    val regiao8: String,
-    val nomeFeira: String,
-    var registro: String,
-    val logradouro: String,
-    val numero: Long,
-    val bairro: String,
-    val referencia: String
-){
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
 
+@Entity
+data class Fair (
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    val id: Long? = null,
+    var longitude: Long,
+    var lagitude: Long,
+    var setcens: Long,
+    var areap: Long,
+    var coddist: Long,
+    var distrito: String,
+    var codsubpref: Long,
+    var subpref: String,
+    var regiao5: String,
+    var regiao8: String,
+    var nomeFeira: String,
+    var registro: String,
+    var logradouro: String,
+    var numero: Long,
+    var bairro: String,
+    var referencia: String
+){
+    constructor() : this(0,0,0,0,0,0,"",0,"","","","","","",0,"","")
 }

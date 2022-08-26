@@ -6,7 +6,7 @@ import br.com.fairDemo.useCases.utils.GetFairCriteria
 interface FairCRUDService {
 
     fun create(newFair: Fair): Fair
-    fun delete(fairId: Long): Boolean
-    fun update(fairId: Long, fair: Fair): Fair
+    fun delete(fairId: Long)
+    fun update(fairId: Long, fair: Fair)
     fun getFairByCriteria(criteria: GetFairCriteria): List<Fair>
 }

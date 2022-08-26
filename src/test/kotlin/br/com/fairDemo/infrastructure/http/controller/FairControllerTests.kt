@@ -64,7 +64,7 @@ class FairControllerTests {
 	@Test
 	fun shouldCallFairServiceOnFairDeletion(){
 		val fairId = FairFixture.getFairDomainForTests().id!!
-		every { fairService.delete(fairId) } returns true
+		every { fairService.delete(fairId) } returns Unit
 		controller.deleteFair(fairId)
 		verify(exactly = 1) { fairService.delete(fairId) }
 	}
@@ -72,7 +72,7 @@ class FairControllerTests {
 	@Test
 	fun shouldReturnNoContentOnResponseOfFairDeletionCreation(){
 		val fairId = FairFixture.getFairDomainForTests().id!!
-		every { fairService.delete(fairId) } returns true
+		every { fairService.delete(fairId) } returns Unit
 		assertThat(
 			controller.deleteFair(fairId))
 			.isInstanceOf(Unit::class.java)
@@ -84,7 +84,7 @@ class FairControllerTests {
 		val fairId: Long = FairFixture.getFairDomainForTests().id!!
 		val fair = FairFixture.getFairDomainForTests()
 		every { updateFairRequest.toFairDomain() } returns fair
-		every { fairService.update(fairId, updateFairRequest.toFairDomain()) } returns FairFixture.getFairDomainForTests()
+		every { fairService.update(fairId, updateFairRequest.toFairDomain()) } returns Unit
 		assertThat(
 			controller.updateFair(fairId, updateFairRequest))
 			.isInstanceOf(UpdateFairResponse::class.java)
@@ -96,7 +96,7 @@ class FairControllerTests {
 		val fairId: Long = FairFixture.getFairDomainForTests().id!!
 		val fair = FairFixture.getFairDomainForTests()
 		every { updateFairRequest.toFairDomain() } returns fair
-		every { fairService.update(fairId, updateFairRequest.toFairDomain()) } returns FairFixture.getFairDomainForTests()
+		every { fairService.update(fairId, updateFairRequest.toFairDomain()) } returns Unit
 		controller.updateFair(fairId, updateFairRequest)
 		verify(exactly = 1) { fairService.update(fairId, updateFairRequest.toFairDomain()) }
 	}
