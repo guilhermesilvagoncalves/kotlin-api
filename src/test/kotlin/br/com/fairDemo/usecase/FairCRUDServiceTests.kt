@@ -61,7 +61,7 @@ class FairCRUDServiceTests {
         every { fairRepositoryMock.deleteById(fair.id!!) } returns Unit
         assertThat(
             service.delete(fair.id!!))
-            .isNull()
+            .isInstanceOf(Unit::class.java)
     }
 
     @Test
@@ -78,7 +78,7 @@ class FairCRUDServiceTests {
         every { fairRepositoryMock.findById(fair.id!!) } returns Optional.of(fair)
         assertThat(
             service.update(fair.id!!, fair))
-            .isInstanceOf(Fair::class.java)
+            .isInstanceOf(Unit::class.java)
     }
 /*
     @Test

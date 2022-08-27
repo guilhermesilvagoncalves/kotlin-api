@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.ResponseEntity
 import java.util.*
 
 @SpringBootTest
@@ -58,7 +59,7 @@ class FairControllerTests {
 		every { fairService.create(FairFixture.getFairDomainForTests()) } returns FairFixture.getFairDomainForTests()
 		assertThat(
 			controller.createFair(createFairRequest))
-			.isInstanceOf(CreateFairResponse::class.java)
+			.isInstanceOf(ResponseEntity::class.java)
 	}
 
 	@Test
@@ -75,7 +76,7 @@ class FairControllerTests {
 		every { fairService.delete(fairId) } returns Unit
 		assertThat(
 			controller.deleteFair(fairId))
-			.isInstanceOf(Unit::class.java)
+			.isInstanceOf(ResponseEntity::class.java)
 	}
 
 	@Test
@@ -87,7 +88,7 @@ class FairControllerTests {
 		every { fairService.update(fairId, updateFairRequest.toFairDomain()) } returns Unit
 		assertThat(
 			controller.updateFair(fairId, updateFairRequest))
-			.isInstanceOf(UpdateFairResponse::class.java)
+			.isInstanceOf(ResponseEntity::class.java)
 	}
 
 	@Test
