@@ -1,12 +1,12 @@
 package br.com.fairDemo.useCases
 
 import br.com.fairDemo.entities.Fair
+import br.com.fairDemo.infrastructure.database.FairDAO.Companion.fromFairDomain
 import br.com.fairDemo.infrastructure.database.FairRepository
 import br.com.fairDemo.useCases.errors.FairNotFound
 import br.com.fairDemo.useCases.utils.FairValidation
 import br.com.fairDemo.useCases.utils.GetFairCriteria
 import org.springframework.stereotype.Service
-import org.springframework.web.client.HttpClientErrorException
 import java.util.*
 
 @Service
@@ -16,7 +16,9 @@ class FairCRUDServiceImpl(
     private val fairValidation: FairValidation
 ): FairCRUDService {
     override fun create(newFair: Fair): Fair {
-        return fairRepository.save(newFair)
+        return fairRepository.save(
+            fromFairDomain(newFair))
+            .toFairDomain()
     }
 
     override fun delete(fairId: Long) {
@@ -48,10 +50,5 @@ class FairCRUDServiceImpl(
 
     override fun getFairByCriteria(criteria: GetFairCriteria): List<Fair> {
         return ArrayList()
-    }
-
-    private fun keepProtectedDataOnObject(incommingFair: Fair, savedFair: Fair): Fair {
-        incommingFair.registro = savedFair.registro
-        return incommingFair
     }
 }

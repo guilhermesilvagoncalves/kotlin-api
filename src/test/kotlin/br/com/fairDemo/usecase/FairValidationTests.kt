@@ -1,5 +1,6 @@
 package br.com.fairDemo.usecase
 
+import br.com.fairDemo.fixtures.FairDAOFixture
 import br.com.fairDemo.fixtures.FairFixture
 import br.com.fairDemo.infrastructure.database.FairRepository
 import br.com.fairDemo.useCases.utils.FairValidation
@@ -21,7 +22,7 @@ class FairValidationTests {
 
     @Test
     fun shouldReturnTrueWhenIdExistsOnDatabase(){
-        every { fairRepository.findById(id) } returns Optional.of(FairFixture.getFairDomainForTests())
+        every { fairRepository.findById(id) } returns Optional.of(FairDAOFixture.getFairDAODomainForTests())
         assertThat(
             validation.isValid(id))
             .isEqualTo(true)
