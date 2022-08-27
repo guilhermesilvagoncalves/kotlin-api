@@ -8,7 +8,6 @@ import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairFilter
 import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairsResponse
 import br.com.fairDemo.infrastructure.http.controller.updateFair.UpdateFairRequest
 import br.com.fairDemo.useCases.FairCRUDService
-import br.com.fairDemo.useCases.ImportFileFromURL
 import br.com.fairDemo.useCases.utils.GetFairCriteria
 import io.mockk.every
 import io.mockk.mockk
@@ -22,21 +21,12 @@ import java.util.*
 @SpringBootTest
 class FairControllerTests {
 
-	private val importFileFromURL: ImportFileFromURL = mockk()
 	private val fairService: FairCRUDService = mockk()
-	val controller = FairController(importFileFromURL, fairService)
+	val controller = FairController(fairService)
 
 	private val getFairFilter: GetFairFilter = GetFairFilterFixture.getGetFairFilterForTest()
 	private val getFairCriteria: GetFairCriteria = getFairFilter.toFairCriteria()
 	private val fair: Fair = FairFixture.getFairDomainForTests()
-
-	@Test
-	fun shouldCallImportFileFromURLService(){
-		every {importFileFromURL.execute("test") } returns Unit
-		assertThat(
-			controller.importFromWebSite("test"))
-			.isInstanceOf(Unit::class.java)
-	}
 
 	@Test
 	fun shouldCallFairServiceOnFairCreation(){

@@ -8,7 +8,6 @@ import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairsResponse
 import br.com.fairDemo.infrastructure.http.controller.updateFair.UpdateFairRequest
 import br.com.fairDemo.useCases.FairCRUDService
 import br.com.fairDemo.useCases.utils.GetFairCriteria
-import br.com.fairDemo.useCases.ImportFileFromURL
 import br.com.fairDemo.useCases.errors.FairNotFound
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -25,20 +24,8 @@ import java.util.*
 
 @RestController("/fair")
 class FairController (
-    private val importFileFromURL: ImportFileFromURL,
     private val fairCRUDServices: FairCRUDService
 ) {
-
-    @GetMapping("/")
-    fun helloWorld(): String{
-        return "hello"
-    }
-
-    @PostMapping("/import-from-website")
-    fun importFromWebSite(@RequestParam url: String){
-        return importFileFromURL.execute(url)
-    }
-
     @PostMapping("/", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createFair(@RequestBody fairRequest: CreateFairRequest):  ResponseEntity<CreateFairResponse> {
         val newFair = fairRequest.toFairDomain()
