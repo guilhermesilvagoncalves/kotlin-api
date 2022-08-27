@@ -1,30 +1,31 @@
 package br.com.fairDemo.infrastructure.http.controller.getFair
 
 import br.com.fairDemo.entities.Fair
+import java.math.BigInteger
 
 class GetFairsResponse (
-    val id: Long?,
-    val longitude: Long,
-    val lagitude: Long,
-    val setcens: Long,
-    val areap: Long,
-    val coddist: Long,
+    val id: String = "",
+    val longitude: BigInteger,
+    val lagitude: BigInteger,
+    val setcens: BigInteger,
+    val areap: BigInteger,
+    val coddist: Int,
     val distrito: String,
-    val codsubpref: Long,
+    val codsubpref: Int,
     val subpref: String,
     val regiao5: String,
     val regiao8: String,
     val nomeFeira: String,
     val registro: String,
     val logradouro: String,
-    val numero: Long,
+    val numero: Int,
     val bairro: String,
     val referencia: String
     ) {
         companion object{
             fun fromFairDomain(fair: Fair): GetFairsResponse {
                 return GetFairsResponse(
-                    id = fair.id,
+                    id = fair.id.toString(),
                     longitude = fair.longitude,
                     lagitude = fair.lagitude,
                     setcens = fair.setcens,

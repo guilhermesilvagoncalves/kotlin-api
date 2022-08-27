@@ -1,23 +1,25 @@
 package br.com.fairDemo.entities
 
+import java.math.BigInteger
+
 data class Fair (
     val id: Long? = null,
-    var longitude: Long,
-    var lagitude: Long,
-    var setcens: Long,
-    var areap: Long,
-    var coddist: Long,
+    var longitude: BigInteger,
+    var lagitude: BigInteger,
+    var setcens: BigInteger,
+    var areap: BigInteger,
+    var coddist: Int,
     var distrito: String,
-    var codsubpref: Long,
+    var codsubpref: Int,
     var subpref: String,
     var regiao5: String,
     var regiao8: String,
     var nomeFeira: String,
     var registro: String,
     var logradouro: String,
-    var numero: Long,
+    var numero: Int,
     var bairro: String,
     var referencia: String
 ){
-    constructor() : this(0,0,0,0,0,0,"",0,"","","","","","",0,"","")
+    constructor() : this(null, BigInteger.valueOf(0),BigInteger.valueOf(0),BigInteger.valueOf(0),BigInteger.valueOf(0),0,"",0,"","","","","","",0,"","")
 }

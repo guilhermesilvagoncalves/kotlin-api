@@ -6,7 +6,6 @@ import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairRespo
 import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairFilter
 import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairsResponse
 import br.com.fairDemo.infrastructure.http.controller.updateFair.UpdateFairRequest
-import br.com.fairDemo.infrastructure.http.controller.updateFair.UpdateFairResponse
 import br.com.fairDemo.useCases.FairCRUDService
 import br.com.fairDemo.useCases.utils.GetFairCriteria
 import br.com.fairDemo.useCases.ImportFileFromURL
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
 

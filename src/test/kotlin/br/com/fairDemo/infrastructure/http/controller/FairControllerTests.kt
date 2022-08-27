@@ -4,11 +4,9 @@ import br.com.fairDemo.entities.Fair
 import br.com.fairDemo.fixtures.FairFixture
 import br.com.fairDemo.fixtures.GetFairFilterFixture
 import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairRequest
-import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairResponse
 import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairFilter
 import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairsResponse
 import br.com.fairDemo.infrastructure.http.controller.updateFair.UpdateFairRequest
-import br.com.fairDemo.infrastructure.http.controller.updateFair.UpdateFairResponse
 import br.com.fairDemo.useCases.FairCRUDService
 import br.com.fairDemo.useCases.ImportFileFromURL
 import br.com.fairDemo.useCases.utils.GetFairCriteria
@@ -16,10 +14,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.ResponseEntity
 import java.util.*

@@ -29,19 +29,19 @@ class FairCRUDServiceImpl(
     override fun update(fairId: Long, fair: Fair) {
         fairRepository.findById(fairId)
             .map { record ->
-                record.longitude = fair.longitude
-                record.lagitude = fair.lagitude
-                record.setcens = fair.setcens
-                record.areap = fair.areap
-                record.coddist = fair.coddist
+                record.long = fair.longitude.toString()
+                record.lat = fair.lagitude.toString()
+                record.setcens = fair.setcens.toString()
+                record.areap = fair.areap.toString()
+                record.coddist = fair.coddist.toString()
                 record.distrito = fair.distrito
-                record.codsubpref = fair.codsubpref
-                record.subpref = fair.subpref
+                record.codsubpref = fair.codsubpref.toString()
+                record.subprefe = fair.subpref
                 record.regiao5 = fair.regiao5
                 record.regiao8 = fair.regiao8
                 record.nomeFeira = fair.nomeFeira
                 record.logradouro = fair.logradouro
-                record.numero = fair.numero
+                record.numero = fair.numero.toString()
                 record.bairro = fair.bairro
                 record.referencia = fair.referencia
                 fairRepository.save(record)

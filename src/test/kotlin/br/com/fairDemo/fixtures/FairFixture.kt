@@ -1,16 +1,17 @@
 package br.com.fairDemo.fixtures
 
 import br.com.fairDemo.entities.Fair
+import java.math.BigInteger
 
 class FairFixture {
     companion object{
         fun getFairDomainForTests(): Fair {
             return Fair(
                 id = 1,
-                longitude = -46548146,
-                lagitude = -23568390,
-                setcens = 355030885000019,
-                areap = 3550308005040,
+                longitude = BigInteger.valueOf(-46548146),
+                lagitude = BigInteger.valueOf(-23568390),
+                setcens = BigInteger.valueOf(355030885000019),
+                areap = BigInteger.valueOf(3550308005040),
                 coddist = 87,
                 distrito = "VILA FORMOSA",
                 codsubpref = 26,

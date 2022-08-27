@@ -50,18 +50,18 @@ class FairCRUDServiceTests {
 
     @Test
     fun shouldCallFairRepositoryOnFairDeletion(){
-        every { fairValidationMock.isValid(fairDAO.id!!) } returns true
-        every { fairRepositoryMock.deleteById(fairDAO.id!!) } returns Unit
-        service.delete(fairDAO.id!!)
-        verify(exactly = 1) { fairRepositoryMock.deleteById(fairDAO.id!!) }
+        every { fairValidationMock.isValid(fair.id!!) } returns true
+        every { fairRepositoryMock.deleteById(fair.id!!) } returns Unit
+        service.delete(fair.id!!)
+        verify(exactly = 1) { fairRepositoryMock.deleteById(fair.id!!) }
     }
 
     @Test
     fun shouldReturnTrueOnResponseOfFairDeletion(){
-        every { fairValidationMock.isValid(fairDAO.id!!) } returns true
-        every { fairRepositoryMock.deleteById(fairDAO.id!!) } returns Unit
+        every { fairValidationMock.isValid(fair.id!!) } returns true
+        every { fairRepositoryMock.deleteById(fair.id!!) } returns Unit
         assertThat(
-            service.delete(fairDAO.id!!))
+            service.delete(fair.id!!))
             .isInstanceOf(Unit::class.java)
     }
 
