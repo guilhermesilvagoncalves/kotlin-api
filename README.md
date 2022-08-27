@@ -1,15 +1,52 @@
 # kotlin-api-example
 
-## How to run application
+##Purpouse
+This repository intends to be a code example of a rest API, using Kotlin + Spring framework.
+It simulates a CRUD repository os fairs and its attributes.
 
-./mvnw clean install
-./mvnw spring-boot:run
+##Requirements
+To run this API, the host needs to have:
+* Apache Maven 3.8.1 or higher
+* JDK version: 17.0.3
+* Kotlin version 1.5.21
+* An instance of postgres, preferably on localhost
 
-## How to run tests
+##Setup
+###Database instance
+To run this app, first, you need to have an instance of Postgres Database running somewhere. This instance will be used by application to persist data and works as a CRUD repository.
+To indicate where is your instance, change [application.properties](src/main/resources/application.properties) file with data about this instance of database.
+* Preferably create a specific database, to isolate changes from another ones
 
-./mvnw test
+###Database mass of data
+For these tests, on [databaseFiles](src/main/resources/databaseFiles) exists a csv file, with a mass of registers, to populate database before tests.
+To create database DDL, run application. It will create this configuration automatically:
+`./mvnw spring-boot:run`
 
-## Endpoints
+After configure database, to import the data:
+* Open Postges using command line (requires access to its hosts, in case its not running locally)
+`psql postgres`
+* Copy file  [DEINFO_AB_FEIRASLIVRES_2014.csv](src/main/resources/databaseFiles/DEINFO_AB_FEIRASLIVRES_2014.csv) to this specific host
+* Run command to copy the data from csv to the database, substituting the path for your application: 
+`COPY fair (LONG,LAT,SETCENS,AREAP,CODDIST,DISTRITO,CODSUBPREF,SUBPREFE,REGIAO5,REGIAO8,NOME_FEIRA,REGISTRO,LOGRADOURO,NUMERO,BAIRRO,REFERENCIA) FROM '{insert-path-to-file}/DEINFO_AB_FEIRASLIVRES_2014.csv' WITH (FORMAT csv);` 
+After these steps, is expected that your database is filled with a bunch of fair registers
+
+
+##More info
+
+
+###How to run application
+
+`./mvnw clean install`
+
+`./mvnw spring-boot:run`
+
+
+###How to run tests
+
+`./mvnw test`
+
+
+###Endpoints
 
 ###Create new fair
 

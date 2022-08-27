@@ -15,15 +15,7 @@ import javax.persistence.Table
 @Table(name = "fair")
 class FairDAO (
     @Id
-    @SequenceGenerator(
-        name = "fair_sequence",
-        sequenceName = "fair_sequence",
-        allocationSize = 1
-    )
-    @GeneratedValue(
-        generator = "fair_sequence",
-        strategy = GenerationType.SEQUENCE
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
     var long: String,
     var lat: String,
