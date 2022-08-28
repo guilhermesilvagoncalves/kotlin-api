@@ -17,9 +17,9 @@ data class Fair (
     var nomeFeira: String,
     var registro: String,
     var logradouro: String,
-    var numero: Int,
-    var bairro: String,
-    var referencia: String
+    var numero: String? = "",
+    var bairro: String? = "",
+    var referencia: String? = ""
 ){
-    constructor() : this(null, BigInteger.valueOf(0),BigInteger.valueOf(0),BigInteger.valueOf(0),BigInteger.valueOf(0),0,"",0,"","","","","","",0,"","")
+    constructor() : this(null, BigInteger.valueOf(0),BigInteger.valueOf(0),BigInteger.valueOf(0),BigInteger.valueOf(0),0,"",0,"","","","","","","","","")
 }

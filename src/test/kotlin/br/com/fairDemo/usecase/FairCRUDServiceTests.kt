@@ -81,11 +81,14 @@ class FairCRUDServiceTests {
             service.update(fair.id!!, fair))
             .isInstanceOf(Unit::class.java)
     }
+//
+//    @Test
+//    fun shouldReturnFairObjectOnResponseOfGetByCriteria(){
+//        assertThat(
+//            service.getFairByCriteria(getFairCriteriaMock))
+//            .isInstanceOf(List::class.java)
+//    }
 
-    @Test
-    fun shouldReturnFairObjectOnResponseOfGetByCriteria(){
-        assertThat(
-            service.getFairByCriteria(getFairCriteriaMock))
-            .isInstanceOf(List::class.java)
-    }
+    //TODO: tests of get service
+
 }

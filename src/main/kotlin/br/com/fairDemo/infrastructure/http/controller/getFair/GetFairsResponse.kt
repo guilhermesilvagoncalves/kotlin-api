@@ -18,9 +18,9 @@ class GetFairsResponse (
     val nomeFeira: String,
     val registro: String,
     val logradouro: String,
-    val numero: Int,
-    val bairro: String,
-    val referencia: String
+    val numero: String? = "",
+    val bairro: String? = "",
+    val referencia: String? = ""
     ) {
         companion object{
             fun fromFairDomain(fair: Fair): GetFairsResponse {

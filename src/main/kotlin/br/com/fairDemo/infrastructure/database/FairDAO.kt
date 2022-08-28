@@ -30,9 +30,9 @@ class FairDAO (
     var nomeFeira: String,
     var registro: String,
     var logradouro: String,
-    var numero: String,
-    var bairro: String,
-    var referencia: String
+    var numero: String? = "",
+    var bairro: String? = "",
+    var referencia: String? = ""
 ){
     constructor() : this(0,"","","","","","","","","","","","","","","","")
 
@@ -52,7 +52,7 @@ class FairDAO (
             nomeFeira = this.nomeFeira,
             registro = this.registro,
             logradouro = this.logradouro,
-            numero = toInt(this.numero),
+            numero = this.numero,
             bairro = this.bairro,
             referencia = this.referencia
         )

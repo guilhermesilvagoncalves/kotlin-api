@@ -17,9 +17,9 @@ data class UpdateFairRequest (
     val nomeFeira: String,
     val registro: String,
     val logradouro: String,
-    val numero: Int,
-    val bairro: String,
-    val referencia: String
+    val numero: String? = "",
+    val bairro: String? = "",
+    val referencia: String? = ""
 ) {
     fun toFairDomain(): Fair {
         return Fair(

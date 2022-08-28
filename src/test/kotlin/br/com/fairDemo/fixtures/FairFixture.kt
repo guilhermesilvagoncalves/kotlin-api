@@ -21,7 +21,7 @@ class FairFixture {
                 nomeFeira = "PRAÃA LE+O X",
                 registro = "7216-8",
                 logradouro = "RUA CODAJ-S",
-                numero = 45,
+                numero = "45",
                 bairro = "VILA FORMOSA",
                 referencia = "PRAÃA  MARECHAL LEIT+O BANDEIRA"
             )

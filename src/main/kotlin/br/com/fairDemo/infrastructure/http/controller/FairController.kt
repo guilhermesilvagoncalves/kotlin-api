@@ -9,6 +9,7 @@ import br.com.fairDemo.infrastructure.http.controller.updateFair.UpdateFairReque
 import br.com.fairDemo.useCases.FairCRUDService
 import br.com.fairDemo.useCases.utils.GetFairCriteria
 import br.com.fairDemo.useCases.errors.FairNotFound
+import org.springframework.data.repository.query.Param
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -72,8 +73,13 @@ class FairController (
     }
 
     @GetMapping("/", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getFairsByCriteria(@RequestParam filter: GetFairFilter): List<GetFairsResponse>{
-        val criteria: GetFairCriteria = filter.toFairCriteria()
+    fun getFairsByCriteria(
+        @RequestParam(required = false) distrito: String?,
+        @RequestParam(required = false) regiao5: String?,
+        @RequestParam(required = false) nomeFeira: String?,
+        @RequestParam(required = false) bairro: String?
+    ): List<GetFairsResponse>{
+        val criteria = GetFairCriteria(distrito, regiao5, nomeFeira, bairro)
         val fairList = fairCRUDServices.getFairByCriteria(criteria)
         return buildGetFairsByCriteriaResponseList(fairList)
     }
