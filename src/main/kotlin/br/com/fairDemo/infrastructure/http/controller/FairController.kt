@@ -3,13 +3,11 @@ package br.com.fairDemo.infrastructure.http.controller
 import br.com.fairDemo.entities.Fair
 import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairRequest
 import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairResponse
-import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairFilter
 import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairsResponse
 import br.com.fairDemo.infrastructure.http.controller.updateFair.UpdateFairRequest
 import br.com.fairDemo.useCases.FairCRUDService
 import br.com.fairDemo.useCases.utils.GetFairCriteria
 import br.com.fairDemo.useCases.errors.FairNotFound
-import org.springframework.data.repository.query.Param
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -74,12 +72,12 @@ class FairController (
 
     @GetMapping("/", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getFairsByCriteria(
-        @RequestParam(required = false) distrito: String?,
-        @RequestParam(required = false) regiao5: String?,
-        @RequestParam(required = false) nomeFeira: String?,
-        @RequestParam(required = false) bairro: String?
+        @RequestParam(value = "distrito", required = false) district: String?,
+        @RequestParam(value = "regiao5", required = false) region5: String?,
+        @RequestParam(value = "nomeFeira", required = false) fairName: String?,
+        @RequestParam(value = "bairro", required = false) neighborhood: String?
     ): List<GetFairsResponse>{
-        val criteria = GetFairCriteria(distrito, regiao5, nomeFeira, bairro)
+        val criteria = GetFairCriteria(district, region5, fairName, neighborhood)
         val fairList = fairCRUDServices.getFairByCriteria(criteria)
         return buildGetFairsByCriteriaResponseList(fairList)
     }
