@@ -25,11 +25,13 @@ To create database DDL, run application. It will create this configuration autom
 After configure database, to import the data:
 * Open Postges using command line (requires access to its hosts, in case its not running locally)
 `psql postgres`
+* Set your terminal to manage the database you created. In that case, we used fairDb name:
+`\c fairDb`
 * Copy file  [DEINFO_AB_FEIRASLIVRES_2014.csv](src/main/resources/databaseFiles/DEINFO_AB_FEIRASLIVRES_2014.csv) to this specific host
 * Run command to copy the data from csv to the database, substituting the path for your application: 
 `COPY fair (LONG,LAT,SETCENS,AREAP,CODDIST,DISTRITO,CODSUBPREF,SUBPREFE,REGIAO5,REGIAO8,NOME_FEIRA,REGISTRO,LOGRADOURO,NUMERO,BAIRRO,REFERENCIA) FROM '{insert-path-to-file}/DEINFO_AB_FEIRASLIVRES_2014.csv' WITH (FORMAT csv);` 
 After these steps, is expected that your database is filled with a bunch of fair registers
-
+`select * from fair f`
 
 ##More info
 
@@ -67,12 +69,12 @@ Body request example:
     "subpref": "ARICANDUVA",
     "regiao5": "Leste",
     "regiao8": "Leste 1",
-    "nomeFeira": "PRAÃA LE+O X",
+    "nomeFeira": "PRAÇA LEÃO X",
     "registro": "7216-8",
     "logradouro": "RUA CODAJ-S",
     "numero": 45,
     "bairro": "VILA FORMOSA",
-    "referencia": "PRAÃA  MARECHAL LEIT+O BANDEIRA"
+    "referencia": "PRAÇA MARECHAL LEITÃO BANDEIRA"
 }
 ```
 

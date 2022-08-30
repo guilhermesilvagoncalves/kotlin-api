@@ -1,20 +1,14 @@
 package br.com.fairDemo.useCases
 
 import br.com.fairDemo.entities.Fair
-import br.com.fairDemo.infrastructure.database.FairDAO
 import br.com.fairDemo.infrastructure.database.FairDAO.Companion.fromFairDomain
 import br.com.fairDemo.infrastructure.database.FairRepository
 import br.com.fairDemo.useCases.errors.FairNotFound
 import br.com.fairDemo.useCases.utils.FairValidation
 import br.com.fairDemo.useCases.utils.GetFairCriteria
 import org.springframework.stereotype.Service
-import java.awt.print.Book
-import java.util.*
 import java.util.stream.Collectors
 import java.util.stream.StreamSupport
-import javax.persistence.criteria.CriteriaBuilder
-import javax.persistence.criteria.Root
-
 
 @Service
 
@@ -55,7 +49,7 @@ class FairCRUDServiceImpl(
             }.orElseThrow{ FairNotFound("Fair not found on database") }
     }
 
-    override fun getFairByCriteria(criteria: GetFairCriteria): MutableList<Fair> {
+    override fun getFairByCriteria(criteria: GetFairCriteria): List<Fair> {
         return StreamSupport.stream(
             fairRepository.findAll().spliterator(), false)
             .collect(Collectors.toList())

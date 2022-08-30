@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.boot.test.context.SpringBootTest
 import java.util.*
+import java.util.Collections.copy
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -28,7 +29,7 @@ class FairCRUDServiceTests {
 
     private val fair: Fair = FairFixture.getFairDomainForTests()
     private val fairDAO: FairDAO = fromFairDomain(fair)
-    private val getFairCriteriaMock: GetFairCriteria = GetFairFilterFixture.getGetFairFilterForTest().toFairCriteria()
+    private val getFairCriteria: GetFairCriteria = GetFairFilterFixture.getGetFairFilterForTest().toFairCriteria()
 
     @BeforeEach
     fun setup(){
@@ -81,14 +82,76 @@ class FairCRUDServiceTests {
             service.update(fair.id!!, fair))
             .isInstanceOf(Unit::class.java)
     }
-//
-//    @Test
-//    fun shouldReturnFairObjectOnResponseOfGetByCriteria(){
-//        assertThat(
-//            service.getFairByCriteria(getFairCriteriaMock))
-//            .isInstanceOf(List::class.java)
-//    }
 
-    //TODO: tests of get service
+    @Test
+    fun shouldReturnFairListObjectOnResponseOfGetByCriteria(){
+        val list =  ArrayList<FairDAO>()
+        list.add(fromFairDomain(fair))
+        val otherFair = fromFairDomain(fair.copy(distrito = "Other district"))
+        list.add(otherFair)
+        every { fairRepositoryMock.findAll() } returns list
+        assertThat(
+            service.getFairByCriteria(getFairCriteria) ==
+            list)
+    }
 
+    @Test
+    fun shouldReturnFairObjectOnResponseOfGetByCriteriaByDistrict(){
+        val list =  ArrayList<FairDAO>()
+        val fair = FairFixture.getFairDomainForTests()
+        list.add(fromFairDomain(fair))
+        val otherFair = fromFairDomain(fair.copy(distrito = "Other district"))
+        list.add(otherFair)
+        val criteriaByDistrict = getFairCriteria.copy(distrito = "Other district")
+        every { fairRepositoryMock.findAll() } returns list
+        assertThat(
+            service.getFairByCriteria(
+                criteriaByDistrict) ==
+                    list)
+    }
+
+    @Test
+    fun shouldReturnFairObjectOnResponseOfGetByCriteriaByRegion5(){
+        val list =  ArrayList<FairDAO>()
+        val fair = FairFixture.getFairDomainForTests()
+        list.add(fromFairDomain(fair))
+        val otherFair = fromFairDomain(fair.copy(regiao5 = "Leste"))
+        list.add(otherFair)
+        val criteriaByDistrict = getFairCriteria.copy(regiao5 = "Leste")
+        every { fairRepositoryMock.findAll() } returns list
+        assertThat(
+            service.getFairByCriteria(
+                criteriaByDistrict) ==
+                    list)
+    }
+
+    @Test
+    fun shouldReturnFairObjectOnResponseOfGetByCriteriaByFairName(){
+        val list =  ArrayList<FairDAO>()
+        val fair = FairFixture.getFairDomainForTests()
+        list.add(fromFairDomain(fair))
+        val otherFair = fromFairDomain(fair.copy(nomeFeira = "PRAÇA LEÃO X"))
+        list.add(otherFair)
+        val criteriaByDistrict = getFairCriteria.copy(nomeFeira = "PRAÇA LEÃO X")
+        every { fairRepositoryMock.findAll() } returns list
+        assertThat(
+            service.getFairByCriteria(
+                criteriaByDistrict) ==
+                    list)
+    }
+
+    @Test
+    fun shouldReturnFairObjectOnResponseOfGetByCriteriaByNeighborhood(){
+        val list =  ArrayList<FairDAO>()
+        val fair = FairFixture.getFairDomainForTests()
+        list.add(fromFairDomain(fair))
+        val otherFair = fromFairDomain(fair.copy(bairro = "VILA FORMOSA"))
+        list.add(otherFair)
+        val criteriaByDistrict = getFairCriteria.copy(bairro = "VILA FORMOSA")
+        every { fairRepositoryMock.findAll() } returns list
+        assertThat(
+            service.getFairByCriteria(
+                criteriaByDistrict) ==
+                    list)
+    }
 }
