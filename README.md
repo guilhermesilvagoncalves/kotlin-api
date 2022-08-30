@@ -45,7 +45,12 @@ After these steps, is expected that your database is filled with a bunch of fair
 
 ###How to run tests
 
-`./mvnw test`
+`./mvnw test` to run tests
+`./mvnw jacoco:report`to generate html report
+Open [Jacoco Report](target/site/jacoco/index.html) to see unit test coverage report
+
+
+
 
 
 ###Endpoints
