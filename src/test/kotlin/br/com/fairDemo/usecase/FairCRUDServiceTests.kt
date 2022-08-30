@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.boot.test.context.SpringBootTest
 import java.util.*
-import java.util.Collections.copy
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -87,7 +86,7 @@ class FairCRUDServiceTests {
     fun shouldReturnFairListObjectOnResponseOfGetByCriteria(){
         val list =  ArrayList<FairDAO>()
         list.add(fromFairDomain(fair))
-        val otherFair = fromFairDomain(fair.copy(distrito = "Other district"))
+        val otherFair = fromFairDomain(fair.copy(district = "Other district"))
         list.add(otherFair)
         every { fairRepositoryMock.findAll() } returns list
         assertThat(
@@ -100,7 +99,7 @@ class FairCRUDServiceTests {
         val list =  ArrayList<FairDAO>()
         val fair = FairFixture.getFairDomainForTests()
         list.add(fromFairDomain(fair))
-        val otherFair = fromFairDomain(fair.copy(distrito = "Other district"))
+        val otherFair = fromFairDomain(fair.copy(district = "Other district"))
         list.add(otherFair)
         val criteriaByDistrict = getFairCriteria.copy(distrito = "Other district")
         every { fairRepositoryMock.findAll() } returns list
@@ -115,7 +114,7 @@ class FairCRUDServiceTests {
         val list =  ArrayList<FairDAO>()
         val fair = FairFixture.getFairDomainForTests()
         list.add(fromFairDomain(fair))
-        val otherFair = fromFairDomain(fair.copy(regiao5 = "Leste"))
+        val otherFair = fromFairDomain(fair.copy(region5 = "Leste"))
         list.add(otherFair)
         val criteriaByDistrict = getFairCriteria.copy(regiao5 = "Leste")
         every { fairRepositoryMock.findAll() } returns list
@@ -130,7 +129,7 @@ class FairCRUDServiceTests {
         val list =  ArrayList<FairDAO>()
         val fair = FairFixture.getFairDomainForTests()
         list.add(fromFairDomain(fair))
-        val otherFair = fromFairDomain(fair.copy(nomeFeira = "PRAÇA LEÃO X"))
+        val otherFair = fromFairDomain(fair.copy(fairName = "PRAÇA LEÃO X"))
         list.add(otherFair)
         val criteriaByDistrict = getFairCriteria.copy(nomeFeira = "PRAÇA LEÃO X")
         every { fairRepositoryMock.findAll() } returns list
@@ -145,7 +144,7 @@ class FairCRUDServiceTests {
         val list =  ArrayList<FairDAO>()
         val fair = FairFixture.getFairDomainForTests()
         list.add(fromFairDomain(fair))
-        val otherFair = fromFairDomain(fair.copy(bairro = "VILA FORMOSA"))
+        val otherFair = fromFairDomain(fair.copy(neighborhood = "VILA FORMOSA"))
         list.add(otherFair)
         val criteriaByDistrict = getFairCriteria.copy(bairro = "VILA FORMOSA")
         every { fairRepositoryMock.findAll() } returns list

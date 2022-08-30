@@ -9,21 +9,21 @@ class FairFixture {
             return Fair(
                 id = 1,
                 longitude = BigInteger.valueOf(-46548146),
-                lagitude = BigInteger.valueOf(-23568390),
+                latitude = BigInteger.valueOf(-23568390),
                 setcens = BigInteger.valueOf(355030885000019),
                 areap = BigInteger.valueOf(3550308005040),
-                coddist = 87,
-                distrito = "VILA FORMOSA",
-                codsubpref = 26,
-                subpref = "ARICANDUVA",
-                regiao5 = "Leste",
-                regiao8 = "Leste 1",
-                nomeFeira = "PRAÃA LE+O X",
-                registro = "7216-8",
-                logradouro = "RUA CODAJ-S",
-                numero = "45",
-                bairro = "VILA FORMOSA",
-                referencia = "PRAÃA  MARECHAL LEIT+O BANDEIRA"
+                districtCode = 87,
+                district = "VILA FORMOSA",
+                subPrefectureCode = 26,
+                subPrefectureName = "ARICANDUVA",
+                region5 = "Leste",
+                region8 = "Leste 1",
+                fairName = "PRAÃA LE+O X",
+                register = "7216-8",
+                publicPlace = "RUA CODAJ-S",
+                number = "45",
+                neighborhood = "VILA FORMOSA",
+                reference = "PRAÃA  MARECHAL LEIT+O BANDEIRA"
             )
         }
     }

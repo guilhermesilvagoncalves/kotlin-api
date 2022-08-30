@@ -24,21 +24,21 @@ data class UpdateFairRequest (
     fun toFairDomain(): Fair {
         return Fair(
             longitude = this.longitude,
-            lagitude = this.lagitude,
+            latitude = this.lagitude,
             setcens = this.setcens,
             areap = this.areap,
-            coddist = this.coddist,
-            distrito = this.distrito,
-            codsubpref = this.codsubpref,
-            subpref = this.subpref,
-            regiao5 = this.regiao5,
-            regiao8 = this.regiao8,
-            nomeFeira = this.nomeFeira,
-            registro = this.registro,
-            logradouro = this.logradouro,
-            numero = this.numero,
-            bairro = this.bairro,
-            referencia = this.referencia
+            districtCode = this.coddist,
+            district = this.distrito,
+            subPrefectureCode = this.codsubpref,
+            subPrefectureName = this.subpref,
+            region5 = this.regiao5,
+            region8 = this.regiao8,
+            fairName = this.nomeFeira,
+            register = this.registro,
+            publicPlace = this.logradouro,
+            number = this.numero,
+            neighborhood = this.bairro,
+            reference = this.referencia
         )
     }
 }

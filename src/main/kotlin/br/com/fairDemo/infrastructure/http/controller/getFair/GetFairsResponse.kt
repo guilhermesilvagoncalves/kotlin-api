@@ -27,21 +27,21 @@ class GetFairsResponse (
                 return GetFairsResponse(
                     id = fair.id.toString(),
                     longitude = fair.longitude,
-                    lagitude = fair.lagitude,
+                    lagitude = fair.latitude,
                     setcens = fair.setcens,
                     areap = fair.areap,
-                    coddist = fair.coddist,
-                    distrito = fair.distrito,
-                    codsubpref = fair.codsubpref,
-                    subpref = fair.subpref,
-                    regiao5 = fair.regiao5,
-                    regiao8 = fair.regiao8,
-                    nomeFeira = fair.nomeFeira,
-                    registro = fair.registro,
-                    logradouro = fair.logradouro,
-                    numero = fair.numero,
-                    bairro = fair.bairro,
-                    referencia = fair.referencia
+                    coddist = fair.districtCode,
+                    distrito = fair.district,
+                    codsubpref = fair.subPrefectureCode,
+                    subpref = fair.subPrefectureName,
+                    regiao5 = fair.region5,
+                    regiao8 = fair.region8,
+                    nomeFeira = fair.fairName,
+                    registro = fair.register,
+                    logradouro = fair.publicPlace,
+                    numero = fair.number,
+                    bairro = fair.neighborhood,
+                    referencia = fair.reference
                 )
             }
         }

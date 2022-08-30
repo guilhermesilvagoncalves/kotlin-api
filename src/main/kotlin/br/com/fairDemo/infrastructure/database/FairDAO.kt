@@ -8,7 +8,6 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.persistence.SequenceGenerator
 import javax.persistence.Table
 
 @Entity
@@ -40,21 +39,21 @@ class FairDAO (
         return Fair(
             id =  this.id,
             longitude = BigInteger.valueOf(toLong(this.long)),
-            lagitude = BigInteger.valueOf(toLong(this.lat)),
+            latitude = BigInteger.valueOf(toLong(this.lat)),
             setcens = BigInteger.valueOf(toLong(this.setcens)),
             areap = BigInteger.valueOf(toLong(this.areap)),
-            coddist =  toInt(this.coddist),
-            distrito = this.distrito,
-            codsubpref = toInt(this.codsubpref),
-            subpref = this.subprefe,
-            regiao5 = this.regiao5,
-            regiao8 = this.regiao8,
-            nomeFeira = this.nomeFeira,
-            registro = this.registro,
-            logradouro = this.logradouro,
-            numero = this.numero,
-            bairro = this.bairro,
-            referencia = this.referencia
+            districtCode =  toInt(this.coddist),
+            district = this.distrito,
+            subPrefectureCode = toInt(this.codsubpref),
+            subPrefectureName = this.subprefe,
+            region5 = this.regiao5,
+            region8 = this.regiao8,
+            fairName = this.nomeFeira,
+            register = this.registro,
+            publicPlace = this.logradouro,
+            number = this.numero,
+            neighborhood = this.bairro,
+            reference = this.referencia
         )
     }
 
@@ -62,22 +61,22 @@ class FairDAO (
         fun fromFairDomain(fair: Fair): FairDAO {
             return FairDAO(
                 id = fair.id,
-                long = fair.lagitude.toString(),
-                lat = fair.lagitude.toString(),
+                long = fair.latitude.toString(),
+                lat = fair.latitude.toString(),
                 setcens = fair.setcens.toString(),
                 areap = fair.areap.toString(),
-                coddist = fair.coddist.toString(),
-                distrito = fair.distrito,
-                codsubpref = fair.codsubpref.toString(),
-                subprefe = fair.subpref,
-                regiao5 = fair.regiao5,
-                regiao8 = fair.regiao8,
-                nomeFeira = fair.nomeFeira,
-                registro = fair.registro,
-                logradouro = fair.logradouro,
-                numero = fair.numero.toString(),
-                bairro = fair.bairro,
-                referencia = fair.referencia
+                coddist = fair.districtCode.toString(),
+                distrito = fair.district,
+                codsubpref = fair.subPrefectureCode.toString(),
+                subprefe = fair.subPrefectureName,
+                regiao5 = fair.region5,
+                regiao8 = fair.region8,
+                nomeFeira = fair.fairName,
+                registro = fair.register,
+                logradouro = fair.publicPlace,
+                numero = fair.number.toString(),
+                bairro = fair.neighborhood,
+                referencia = fair.reference
             )
         }
     }

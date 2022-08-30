@@ -5,21 +5,21 @@ import java.math.BigInteger
 data class Fair (
     val id: Long? = null,
     var longitude: BigInteger,
-    var lagitude: BigInteger,
+    var latitude: BigInteger,
     var setcens: BigInteger,
     var areap: BigInteger,
-    var coddist: Int,
-    var distrito: String,
-    var codsubpref: Int,
-    var subpref: String,
-    var regiao5: String,
-    var regiao8: String,
-    var nomeFeira: String,
-    var registro: String,
-    var logradouro: String,
-    var numero: String? = "",
-    var bairro: String? = "",
-    var referencia: String? = ""
+    var districtCode: Int,
+    var district: String,
+    var subPrefectureCode: Int,
+    var subPrefectureName: String,
+    var region5: String,
+    var region8: String,
+    var fairName: String,
+    var register: String,
+    var publicPlace: String,
+    var number: String? = "",
+    var neighborhood: String? = "",
+    var reference: String? = ""
 ){
     constructor() : this(null, BigInteger.valueOf(0),BigInteger.valueOf(0),BigInteger.valueOf(0),BigInteger.valueOf(0),0,"",0,"","","","","","","","","")
 }

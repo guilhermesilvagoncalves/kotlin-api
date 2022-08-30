@@ -31,20 +31,20 @@ class FairCRUDServiceImpl(
         fairRepository.findById(fairId)
             .map { record ->
                 record.long = fair.longitude.toString()
-                record.lat = fair.lagitude.toString()
+                record.lat = fair.latitude.toString()
                 record.setcens = fair.setcens.toString()
                 record.areap = fair.areap.toString()
-                record.coddist = fair.coddist.toString()
-                record.distrito = fair.distrito
-                record.codsubpref = fair.codsubpref.toString()
-                record.subprefe = fair.subpref
-                record.regiao5 = fair.regiao5
-                record.regiao8 = fair.regiao8
-                record.nomeFeira = fair.nomeFeira
-                record.logradouro = fair.logradouro
-                record.numero = fair.numero.toString()
-                record.bairro = fair.bairro
-                record.referencia = fair.referencia
+                record.coddist = fair.districtCode.toString()
+                record.distrito = fair.district
+                record.codsubpref = fair.subPrefectureCode.toString()
+                record.subprefe = fair.subPrefectureName
+                record.regiao5 = fair.region5
+                record.regiao8 = fair.region8
+                record.nomeFeira = fair.fairName
+                record.logradouro = fair.publicPlace
+                record.numero = fair.number.toString()
+                record.bairro = fair.neighborhood
+                record.referencia = fair.reference
                 fairRepository.save(record)
             }.orElseThrow{ FairNotFound("Fair not found on database") }
     }
@@ -55,10 +55,10 @@ class FairCRUDServiceImpl(
             .collect(Collectors.toList())
             .stream()
             .map { fairDAO -> fairDAO.toFairDomain() }
-            .filter{ fair -> if (isNotEmpty(criteria.distrito)) fair.distrito == criteria.distrito else true }
-            .filter{ fair -> if (isNotEmpty(criteria.regiao5)) fair.regiao5 == criteria.regiao5 else true }
-            .filter{ fair -> if (isNotEmpty(criteria.nomeFeira)) fair.nomeFeira == criteria.nomeFeira else true }
-            .filter{ fair -> if (isNotEmpty(criteria.bairro)) fair.bairro == criteria.bairro else true }
+            .filter{ fair -> if (isNotEmpty(criteria.distrito)) fair.district == criteria.distrito else true }
+            .filter{ fair -> if (isNotEmpty(criteria.regiao5)) fair.region5 == criteria.regiao5 else true }
+            .filter{ fair -> if (isNotEmpty(criteria.nomeFeira)) fair.fairName == criteria.nomeFeira else true }
+            .filter{ fair -> if (isNotEmpty(criteria.bairro)) fair.neighborhood == criteria.bairro else true }
             .toList()
     }
 
