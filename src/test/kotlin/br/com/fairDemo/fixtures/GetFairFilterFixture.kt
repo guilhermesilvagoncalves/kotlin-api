@@ -6,10 +6,10 @@ class GetFairFilterFixture {
     companion object{
         fun getGetFairFilterForTest(): GetFairFilter{
             return GetFairFilter(
-                    distrito = "",
-                    regiao5 = "",
-                    nomeFeira = "",
-                    bairro = "",
+                    district = "",
+                    region5 = "",
+                    fairName = "",
+                    neighborhood = "",
                 )
         }
     }

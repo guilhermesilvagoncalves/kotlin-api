@@ -3,17 +3,17 @@ package br.com.fairDemo.infrastructure.http.controller.getFair
 import br.com.fairDemo.useCases.utils.GetFairCriteria
 
 data class GetFairFilter (
-    val distrito: String = "",
-    val regiao5: String = "",
-    val nomeFeira: String = "",
-    val bairro: String = ""
+    val district: String = "",
+    val region5: String = "",
+    val fairName: String = "",
+    val neighborhood: String = ""
 ) {
     fun toFairCriteria(): GetFairCriteria {
         return GetFairCriteria(
-            distrito = this.distrito,
-            regiao5 = this.regiao5,
-            nomeFeira = this.nomeFeira,
-            bairro = this.bairro
+            distrito = this.district,
+            regiao5 = this.region5,
+            nomeFeira = this.fairName,
+            bairro = this.neighborhood
         )
     }
 }
