@@ -15,6 +15,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -40,7 +41,7 @@ class FairCRUDServiceTests {
     @Test
     fun shouldCallFairRepositoryOnFairCreation(){
         service.create(fair)
-        verify(exactly = 1) { fairRepositoryMock.save(any()) }
+        verify(atLeast = 1) { fairRepositoryMock.save(any()) }
     }
 
     @Test
@@ -55,7 +56,7 @@ class FairCRUDServiceTests {
         every { fairValidationMock.isValid(fair.id!!) } returns true
         every { fairRepositoryMock.deleteById(fair.id!!) } returns Unit
         service.delete(fair.id!!)
-        verify(exactly = 1) { fairRepositoryMock.deleteById(fair.id!!) }
+        verify(atLeast = 1) { fairRepositoryMock.deleteById(fair.id!!) }
     }
 
     @Test
@@ -84,13 +85,58 @@ class FairCRUDServiceTests {
             .isInstanceOf(Unit::class.java)
     }
 
-//    @Test
-//    fun shouldReturnFairNotFoundWhenFairDoesNotExistOnUpdate(){
-//        val fair = FairFixture.getFairDomainForTests()
-//        every { fairRepositoryMock.findById(fair.id!!) } returns Optional.empty()
-//        assertThrows.assertThrows(
-//            FairNotFound.class, ()-> service.update(fair.id!!, fair))
-//    }
+    @Test
+    fun shouldReturnFairNotFoundWhenFairDoesNotExistOnUpdate(){
+       val fair = FairFixture.getFairDomainForTests()
+       every { fairRepositoryMock.findById(fair.id!!) } returns Optional.empty()
+        var exceptionThrown = false
+        try {
+            service.update(fair.id!!, fair)
+        } catch(e: FairNotFound) {
+            exceptionThrown = true
+        }
+        assertTrue(exceptionThrown)
+    }
+
+    @Test
+    fun shouldReturnInternalErrorWhenOccursExceptionOnUpdate(){
+        val fair = FairFixture.getFairDomainForTests()
+        every { fairRepositoryMock.findById(fair.id!!) } throws RuntimeException()
+        var exceptionThrown = false
+        try {
+            service.update(fair.id!!, fair)
+        } catch(e: Exception) {
+            exceptionThrown = true
+        }
+        assertTrue(exceptionThrown)
+    }
+
+    @Test
+    fun shouldReturnFairNotFoundWhenFairDoesNotExistOnDelete(){
+        val fair = FairFixture.getFairDomainForTests()
+        every { fairValidationMock.isValid(fair.id!!) } returns false
+        var exceptionThrown = false
+        try {
+            service.delete(fair.id!!)
+        } catch(e: FairNotFound) {
+            exceptionThrown = true
+        }
+        assertTrue(exceptionThrown)
+    }
+
+    @Test
+    fun shouldReturnInternalErrorWhenOccursExceptionOnDelete(){
+        val fair = FairFixture.getFairDomainForTests()
+        every { fairValidationMock.isValid(fair.id!!) } returns true
+        every { fairRepositoryMock.delete(fromFairDomain(fair)) } throws RuntimeException()
+        var exceptionThrown = false
+        try {
+            service.delete(fair.id!!)
+        } catch(e: Exception) {
+            exceptionThrown = true
+        }
+        assertTrue(exceptionThrown)
+    }
 
     @Test
     fun shouldReturnFairListObjectOnResponseOfGetByCriteria(){
