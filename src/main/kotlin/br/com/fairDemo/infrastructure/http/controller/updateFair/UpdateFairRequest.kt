@@ -8,7 +8,7 @@ data class UpdateFairRequest (
     @JsonProperty("longitude")
     val longitude: BigInteger,
     @JsonProperty("lagitude")
-    val lagitude: BigInteger,
+    val latitude: BigInteger,
     @JsonProperty("setcens")
     val setcens: BigInteger,
     @JsonProperty("areap")
@@ -41,7 +41,7 @@ data class UpdateFairRequest (
     fun toFairDomain(): Fair {
         return Fair(
             longitude = this.longitude,
-            latitude = this.lagitude,
+            latitude = this.latitude,
             setcens = this.setcens,
             areap = this.areap,
             districtCode = this.districtCode,

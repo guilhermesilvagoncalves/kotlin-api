@@ -55,10 +55,10 @@ class FairCRUDServiceImpl(
             .collect(Collectors.toList())
             .stream()
             .map { fairDAO -> fairDAO.toFairDomain() }
-            .filter{ fair -> if (isNotEmpty(criteria.distrito)) fair.district == criteria.distrito else true }
-            .filter{ fair -> if (isNotEmpty(criteria.regiao5)) fair.region5 == criteria.regiao5 else true }
-            .filter{ fair -> if (isNotEmpty(criteria.nomeFeira)) fair.fairName == criteria.nomeFeira else true }
-            .filter{ fair -> if (isNotEmpty(criteria.bairro)) fair.neighborhood == criteria.bairro else true }
+            .filter{ fair -> if (isNotEmpty(criteria.district)) fair.district == criteria.district else true }
+            .filter{ fair -> if (isNotEmpty(criteria.region5)) fair.region5 == criteria.region5 else true }
+            .filter{ fair -> if (isNotEmpty(criteria.fairName)) fair.fairName == criteria.fairName else true }
+            .filter{ fair -> if (isNotEmpty(criteria.neighborhood)) fair.neighborhood == criteria.neighborhood else true }
             .toList()
     }
 

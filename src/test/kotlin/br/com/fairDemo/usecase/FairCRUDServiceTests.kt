@@ -101,7 +101,7 @@ class FairCRUDServiceTests {
         list.add(fromFairDomain(fair))
         val otherFair = fromFairDomain(fair.copy(district = "Other district"))
         list.add(otherFair)
-        val criteriaByDistrict = getFairCriteria.copy(distrito = "Other district")
+        val criteriaByDistrict = getFairCriteria.copy(district = "Other district")
         every { fairRepositoryMock.findAll() } returns list
         assertThat(
             service.getFairByCriteria(
@@ -116,7 +116,7 @@ class FairCRUDServiceTests {
         list.add(fromFairDomain(fair))
         val otherFair = fromFairDomain(fair.copy(region5 = "Leste"))
         list.add(otherFair)
-        val criteriaByDistrict = getFairCriteria.copy(regiao5 = "Leste")
+        val criteriaByDistrict = getFairCriteria.copy(region5 = "Leste")
         every { fairRepositoryMock.findAll() } returns list
         assertThat(
             service.getFairByCriteria(
@@ -131,7 +131,7 @@ class FairCRUDServiceTests {
         list.add(fromFairDomain(fair))
         val otherFair = fromFairDomain(fair.copy(fairName = "PRAÇA LEÃO X"))
         list.add(otherFair)
-        val criteriaByDistrict = getFairCriteria.copy(nomeFeira = "PRAÇA LEÃO X")
+        val criteriaByDistrict = getFairCriteria.copy(fairName = "PRAÇA LEÃO X")
         every { fairRepositoryMock.findAll() } returns list
         assertThat(
             service.getFairByCriteria(
@@ -146,7 +146,7 @@ class FairCRUDServiceTests {
         list.add(fromFairDomain(fair))
         val otherFair = fromFairDomain(fair.copy(neighborhood = "VILA FORMOSA"))
         list.add(otherFair)
-        val criteriaByDistrict = getFairCriteria.copy(bairro = "VILA FORMOSA")
+        val criteriaByDistrict = getFairCriteria.copy(neighborhood = "VILA FORMOSA")
         every { fairRepositoryMock.findAll() } returns list
         assertThat(
             service.getFairByCriteria(

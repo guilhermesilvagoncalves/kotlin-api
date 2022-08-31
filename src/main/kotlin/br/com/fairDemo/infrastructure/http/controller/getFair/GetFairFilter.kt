@@ -10,10 +10,10 @@ data class GetFairFilter (
 ) {
     fun toFairCriteria(): GetFairCriteria {
         return GetFairCriteria(
-            distrito = this.district,
-            regiao5 = this.region5,
-            nomeFeira = this.fairName,
-            bairro = this.neighborhood
+            district = this.district,
+            region5 = this.region5,
+            fairName = this.fairName,
+            neighborhood = this.neighborhood
         )
     }
 }
