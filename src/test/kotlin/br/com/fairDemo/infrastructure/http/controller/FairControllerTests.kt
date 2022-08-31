@@ -5,9 +5,9 @@ import br.com.fairDemo.fixtures.FairFixture
 import br.com.fairDemo.fixtures.GetFairFilterFixture
 import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairRequest
 import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairFilter
-import br.com.fairDemo.infrastructure.http.controller.getFair.GetFairsResponse
 import br.com.fairDemo.infrastructure.http.controller.updateFair.UpdateFairRequest
 import br.com.fairDemo.useCases.FairCRUDService
+import br.com.fairDemo.useCases.errors.FairNotFound
 import br.com.fairDemo.useCases.utils.GetFairCriteria
 import io.mockk.every
 import io.mockk.mockk
@@ -15,6 +15,7 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import java.util.*
 
@@ -25,8 +26,6 @@ class FairControllerTests {
 	val controller = FairController(fairService)
 
 	private val getFairFilter: GetFairFilter = GetFairFilterFixture.getGetFairFilterForTest()
-	private val getFairCriteria: GetFairCriteria = getFairFilter.toFairCriteria()
-	private val fair: Fair = FairFixture.getFairDomainForTests()
 
 	@Test
 	fun shouldCallFairServiceOnFairCreation(){
@@ -86,32 +85,137 @@ class FairControllerTests {
 		controller.updateFair(fairId, updateFairRequest)
 		verify(exactly = 1) { fairService.update(fairId, updateFairRequest.toFairDomain()) }
 	}
-//TODO: fix tests
-//	@Test
-//	fun shouldCallFairServiceOnFairGetByCriteria(){
-//		val listOfFairs = getListOfFairs(fair)
-//		every { fairService.getFairByCriteria(getFairCriteria) } returns listOfFairs
-//		controller.getFairsByCriteria(getFairFilter)
-//		verify(exactly = 1) { fairService.getFairByCriteria(getFairCriteria) }
-//	}
-//
-//	@Test
-//	fun shouldReturnListOfFairsOnResponseOfFairGetByCriteria(){
-//		val listOfFairs = getListOfFairs(fair)
-//		every { fairService.getFairByCriteria(getFairCriteria) } returns listOfFairs
-//		assertThat(
-//			controller.getFairsByCriteria(getFairFilter))
-//			.isInstanceOf(List::class.java)
-//			.first()
-//			.isInstanceOf(GetFairsResponse::class.java)
-//	}
 
-	private fun getListOfFairs(fair: Fair): List<Fair> {
-		val listOfFairs = ArrayList<Fair>()
-		listOfFairs.add(fair)
-		return listOfFairs
+	@Test
+	fun shouldReturnErrorWhenFairIdDoesNotExistOnDelete(){
+		val fairId: Long = FairFixture.getFairDomainForTests().id!!
+		every { fairService.delete(fairId) } throws FairNotFound("Fair not found")
+		assertThat(
+			controller.deleteFair(fairId) == getFairNotFoundErrorResponseEntity())
+		}
+
+	@Test
+	fun shouldReturnErrorWhenIsNotFairIdDoesNotExistOnDelete(){
+		val fairId: Long = FairFixture.getFairDomainForTests().id!!
+		every { fairService.delete(fairId) } throws Exception("Internal Error")
+		assertThat(
+			controller.deleteFair(fairId) == getInternalServerErrorResponseEntity())
 	}
 
-	//TODO: tests of get endpoint
+	@Test
+	fun shouldReturnErrorWhenFairIdDoesNotExistOnUpdate(){
+		val updateFairRequest: UpdateFairRequest = mockk()
+		every { updateFairRequest.toFairDomain() } returns FairFixture.getFairDomainForTests()
+		val fairId = FairFixture.getFairDomainForTests().id!!
+		every { fairService.update(fairId, updateFairRequest.toFairDomain()) } throws FairNotFound("Fair not found")
+		assertThat(
+			controller.updateFair(fairId, updateFairRequest) == getFairNotFoundErrorResponseEntity())
+	}
 
+	@Test
+	fun shouldReturnErrorWhenIsNotFairIdDoesNotExistOnUpdate(){
+		val updateFairRequest: UpdateFairRequest = mockk()
+		every { updateFairRequest.toFairDomain() } returns FairFixture.getFairDomainForTests()
+		val fairId = FairFixture.getFairDomainForTests().id!!
+		every { fairService.delete(fairId) } throws Exception("Internal Error")
+		assertThat(
+			controller.updateFair(fairId, updateFairRequest) == getFairNotFoundErrorResponseEntity())
+	}
+
+	private fun getFairNotFoundErrorResponseEntity(): ResponseEntity<String> {
+		return ResponseEntity
+			.status(HttpStatus.BAD_REQUEST)
+			.body("Fair not found")
+	}
+
+	private fun getInternalServerErrorResponseEntity(): ResponseEntity<String> {
+		return ResponseEntity
+			.status(HttpStatus.BAD_REQUEST)
+			.body("Internal Error")
+	}
+
+	@Test
+	fun shouldReturnListOfFairsOnGetRequestWithoutParameters(){
+		val listOfFairs = ArrayList<Fair>()
+		val fair = FairFixture.getFairDomainForTests()
+		listOfFairs.add(fair)
+		val district = null
+		val region5 = null
+		val fairName = null
+		val neighborhood = null
+		val criteria = GetFairCriteria(district, region5, fairName, neighborhood)
+		every { fairService.getFairByCriteria(criteria) } returns listOfFairs
+		assertThat(
+			controller.getFairsByCriteria(district, region5, fairName, neighborhood) ==
+					listOfFairs)
+	}
+
+	@Test
+	fun shouldReturnListOfFairsOnGetRequestWithDistrict(){
+		val listOfFairs = ArrayList<Fair>()
+		val fair = FairFixture.getFairDomainForTests()
+		fair.district = "District"
+		listOfFairs.add(fair)
+		val district = "District"
+		val region5 = null
+		val fairName = null
+		val neighborhood = null
+		val criteria = GetFairCriteria(district, region5, fairName, neighborhood)
+		every { fairService.getFairByCriteria(criteria) } returns listOfFairs
+		assertThat(
+			controller.getFairsByCriteria(district, region5, fairName, neighborhood) ==
+					listOfFairs)
+	}
+
+	@Test
+	fun shouldReturnListOfFairsOnGetRequestWithRegion5(){
+		val listOfFairs = ArrayList<Fair>()
+		val fair = FairFixture.getFairDomainForTests()
+		fair.region5 = "Regiao 5"
+		listOfFairs.add(fair)
+		val district = null
+		val region5 = "Regiao 5"
+		val fairName = null
+		val neighborhood = null
+		val criteria = GetFairCriteria(district, region5, fairName, neighborhood)
+		every { fairService.getFairByCriteria(criteria) } returns listOfFairs
+		assertThat(
+			controller.getFairsByCriteria(district, region5, fairName, neighborhood) ==
+					listOfFairs)
+	}
+
+	@Test
+	fun shouldReturnListOfFairsOnGetRequestWithFairName(){
+		val listOfFairs = ArrayList<Fair>()
+		val fair = FairFixture.getFairDomainForTests()
+		fair.fairName = "Fair Name"
+		listOfFairs.add(fair)
+		val district = null
+		val region5 = null
+		val fairName = "Fair Name"
+		val neighborhood = null
+		val criteria = GetFairCriteria(district, region5, fairName, neighborhood)
+		every { fairService.getFairByCriteria(criteria) } returns listOfFairs
+		assertThat(
+			controller.getFairsByCriteria(district, region5, fairName, neighborhood) ==
+					listOfFairs)
+	}
+
+
+	@Test
+	fun shouldReturnListOfFairsOnGetRequestWithNeighborhood(){
+		val listOfFairs = ArrayList<Fair>()
+		val fair = FairFixture.getFairDomainForTests()
+		fair.neighborhood = "Neighborhood"
+		listOfFairs.add(fair)
+		val district = null
+		val region5 = null
+		val fairName = null
+		val neighborhood = "Neighborhood"
+		val criteria = GetFairCriteria(district, region5, fairName, neighborhood)
+		every { fairService.getFairByCriteria(criteria) } returns listOfFairs
+		assertThat(
+			controller.getFairsByCriteria(district, region5, fairName, neighborhood) ==
+					listOfFairs)
+	}
 }

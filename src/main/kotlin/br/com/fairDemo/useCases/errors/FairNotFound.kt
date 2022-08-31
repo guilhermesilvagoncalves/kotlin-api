@@ -1,3 +1,3 @@
 package br.com.fairDemo.useCases.errors
 
-class FairNotFound(message: String): RuntimeException(message)
+class FairNotFound(message: String) : RuntimeException()

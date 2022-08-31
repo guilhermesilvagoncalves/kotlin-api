@@ -7,12 +7,14 @@ import br.com.fairDemo.infrastructure.database.FairDAO
 import br.com.fairDemo.infrastructure.database.FairDAO.Companion.fromFairDomain
 import br.com.fairDemo.infrastructure.database.FairRepository
 import br.com.fairDemo.useCases.FairCRUDServiceImpl
+import br.com.fairDemo.useCases.errors.FairNotFound
 import br.com.fairDemo.useCases.utils.FairValidation
 import br.com.fairDemo.useCases.utils.GetFairCriteria
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -153,4 +155,18 @@ class FairCRUDServiceTests {
                 criteriaByDistrict) ==
                     list)
     }
+
+    @Test
+    fun shouldReturnFairObjectOnResponseOfGetByCriteriaWhenParamAreNnull(){
+        val list =  ArrayList<FairDAO>()
+        val fair = FairFixture.getFairDomainForTests()
+        list.add(fromFairDomain(fair))
+        val criteriaByDistrict = GetFairCriteria(null, null,null,null)
+        every { fairRepositoryMock.findAll() } returns list
+        assertThat(
+            service.getFairByCriteria(
+                criteriaByDistrict) ==
+                    list)
+    }
+
 }
