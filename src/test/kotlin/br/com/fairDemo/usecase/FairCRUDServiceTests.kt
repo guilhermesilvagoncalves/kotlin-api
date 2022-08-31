@@ -84,6 +84,14 @@ class FairCRUDServiceTests {
             .isInstanceOf(Unit::class.java)
     }
 
+//    @Test
+//    fun shouldReturnFairNotFoundWhenFairDoesNotExistOnUpdate(){
+//        val fair = FairFixture.getFairDomainForTests()
+//        every { fairRepositoryMock.findById(fair.id!!) } returns Optional.empty()
+//        assertThrows.assertThrows(
+//            FairNotFound.class, ()-> service.update(fair.id!!, fair))
+//    }
+
     @Test
     fun shouldReturnFairListObjectOnResponseOfGetByCriteria(){
         val list =  ArrayList<FairDAO>()
