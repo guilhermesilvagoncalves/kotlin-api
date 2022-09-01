@@ -5,7 +5,7 @@ import br.com.fairDemo.fixtures.FairFixture
 import br.com.fairDemo.fixtures.GetFairFilterFixture
 import br.com.fairDemo.infrastructure.database.FairDAO
 import br.com.fairDemo.infrastructure.database.FairDAO.Companion.fromFairDomain
-import br.com.fairDemo.infrastructure.database.FairRepository
+import br.com.fairDemo.infrastructure.database.FairDatabaseGateway
 import br.com.fairDemo.useCases.FairCRUDServiceImpl
 import br.com.fairDemo.useCases.errors.FairNotFound
 import br.com.fairDemo.useCases.utils.FairValidation
@@ -14,7 +14,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -25,7 +24,7 @@ import java.util.*
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FairCRUDServiceTests {
-    private val fairRepositoryMock : FairRepository = mockk()
+    private val fairRepositoryMock : FairDatabaseGateway = mockk()
     private val fairValidationMock : FairValidation = mockk()
     val service = FairCRUDServiceImpl(fairRepositoryMock, fairValidationMock)
 

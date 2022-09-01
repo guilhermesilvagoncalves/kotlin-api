@@ -1,7 +1,6 @@
 package br.com.fairDemo.infrastructure.http.controller.getFair
 
 import br.com.fairDemo.entities.Fair
-import br.com.fairDemo.infrastructure.http.controller.createFair.CreateFairResponse
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.math.BigInteger
 

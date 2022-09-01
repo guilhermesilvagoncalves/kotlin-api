@@ -2,7 +2,7 @@ package br.com.fairDemo.useCases
 
 import br.com.fairDemo.entities.Fair
 import br.com.fairDemo.infrastructure.database.FairDAO.Companion.fromFairDomain
-import br.com.fairDemo.infrastructure.database.FairRepository
+import br.com.fairDemo.infrastructure.database.FairDatabaseGateway
 import br.com.fairDemo.useCases.errors.FairNotFound
 import br.com.fairDemo.useCases.utils.FairValidation
 import br.com.fairDemo.useCases.utils.GetFairCriteria
@@ -13,22 +13,22 @@ import java.util.stream.StreamSupport
 @Service
 
 class FairCRUDServiceImpl(
-    private val fairRepository: FairRepository,
+    private val fairDatabaseGateway: FairDatabaseGateway,
     private val fairValidation: FairValidation
 ): FairCRUDService {
     override fun create(newFair: Fair): Fair {
-        return fairRepository.save(
+        return fairDatabaseGateway.save(
             fromFairDomain(newFair))
             .toFairDomain()
     }
 
     override fun delete(fairId: Long) {
         if (!fairValidation.isValid(fairId)) throw FairNotFound("Fair not found on database")
-        fairRepository.deleteById(fairId)
+        fairDatabaseGateway.deleteById(fairId)
     }
 
     override fun update(fairId: Long, fair: Fair) {
-        fairRepository.findById(fairId)
+        fairDatabaseGateway.findById(fairId)
             .map { record ->
                 record.long = fair.longitude.toString()
                 record.lat = fair.latitude.toString()
@@ -45,13 +45,13 @@ class FairCRUDServiceImpl(
                 record.numero = fair.number.toString()
                 record.bairro = fair.neighborhood
                 record.referencia = fair.reference
-                fairRepository.save(record)
+                fairDatabaseGateway.save(record)
             }.orElseThrow{ FairNotFound("Fair not found on database") }
     }
 
     override fun getFairByCriteria(criteria: GetFairCriteria): List<Fair> {
         return StreamSupport.stream(
-            fairRepository.findAll().spliterator(), false)
+            fairDatabaseGateway.findAll().spliterator(), false)
             .collect(Collectors.toList())
             .stream()
             .map { fairDAO -> fairDAO.toFairDomain() }
